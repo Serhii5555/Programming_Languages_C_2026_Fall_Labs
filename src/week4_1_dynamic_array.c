@@ -1,7 +1,7 @@
 /*
  * week4_1_dynamic_array.c
- * Author: [Your Name]
- * Student ID: [Your ID]
+ * Name: Serhii Beilakh
+ * Student ID: 260ADB195
  * Description:
  *   Demonstrates creation and usage of a dynamic array using malloc.
  *   Allocate memory for n integers, read them from the user,
@@ -18,31 +18,46 @@ int main(void) {
     int n;
     int *arr = NULL;
 
+    // Prompt for array size and validate input
     printf("Enter number of elements: ");
     if (scanf("%d", &n) != 1 || n <= 0) {
         printf("Invalid size.\n");
         return 1;
     }
 
-    // TODO: Allocate memory for n integers using malloc
-    // Example: arr = malloc(n * sizeof(int));
+    // Allocate dynamic memory for n integers
+    arr = malloc((size_t)n * sizeof(int));
 
-    // TODO: Check allocation success
-    // If arr is NULL: print "Memory allocation failed." and return 1
+    // Check if memory allocation succeeded
+    if (arr == NULL) {
+        printf("Memory allocation failed.\n");
+        return 1;
+    }
 
-    // TODO: Print the prompt "Enter %d integers: " (with n), then read
-    //       n integers into the array.
-    //       If a value cannot be read: print "Invalid input.",
-    //       free the array and return 1
+    // Prompt user for input values
+    printf("Enter %d integers: ", n);
 
-    // TODO: Compute the sum and the average (use floating point for the average)
+    long long sum = 0; // Use long long to prevent potential integer overflow
 
-    // TODO: Print the results exactly as:
-    //       Sum = <sum>
-    //       Average = <average with 2 decimals, %.2f>
+    // Read n integers into the dynamic array
+    for (int i = 0; i < n; i++) {
+        if (scanf("%d", &arr[i]) != 1) {
+            printf("Invalid input.\n");
+            free(arr); // Clean up memory before exiting
+            return 1;
+        }
+        sum += arr[i];
+    }
 
-    // TODO: Free allocated memory
-    (void)arr;  // remove this line once you use arr
+    // Compute average in double precision floating point
+    double average = (double)sum / n;
+
+    // Print results matching exact requirements
+    printf("Sum = %lld\n", sum);
+    printf("Average = %.2f\n", average);
+
+    // Free dynamically allocated memory
+    free(arr);
 
     return 0;
 }
